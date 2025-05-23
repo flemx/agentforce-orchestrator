@@ -24,6 +24,7 @@
   "dependencies": {
     "concurrently": "^8.0.0",
     "@langchain/langgraph-cli": "0.0.37",
+    "@langchain/community": "^0.3.3",
     "@langchain/core": "^0.3.44",
     "@langchain/langgraph": "^0.2.63",
     "@langchain/openai": "^0.3.2",
