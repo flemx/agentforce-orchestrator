@@ -7,7 +7,7 @@
     "url": "git+https://github.com/flemx/agentforce-orchestrator.git"
   },
   "stackblitz": {
-    "startCommand": "concurrently -n NEXT,GRAPH --kill-others-on-fail -c blue,green \"dotenv -e .env.example pnpm dev\" \"concurrently --delay 5000 \\\"npx @langchain/langgraph-cli dev --no-browser\\\"\""
+    "startCommand": "concurrently -n GRAPH,NEXT -c green,blue --kill-others-on-fail \"concurrently --delay 10000 \\\"npx @langchain/langgraph-cli dev --no-browser\\\"\" \"dotenv -e .env.example pnpm dev\""
   },
   "private": true,
   "version": "0.0.0",
