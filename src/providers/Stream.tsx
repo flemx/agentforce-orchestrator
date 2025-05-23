@@ -24,6 +24,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { getApiKey } from "@/lib/api-key";
 import { useThreads } from "./Thread";
 import { toast } from "sonner";
+import SetApiKey from "@/components/SetApiKey";
 
 export type StateType = { messages: Message[]; ui?: UIMessage[] };
 
@@ -195,6 +196,7 @@ export const StreamProvider: React.FC<{ children: ReactNode }> = ({
             }}
             className="bg-muted/50 flex flex-col gap-6 p-6"
           >
+            <SetApiKey assistantId="agent" />
             <div className="flex flex-col gap-2">
               <Label htmlFor="apiUrl">
                 Deployment URL<span className="text-rose-500">*</span>
