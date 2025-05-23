@@ -7,7 +7,11 @@
     "url": "git+https://github.com/flemx/agentforce-orchestrator.git"
   },
   "stackblitz": {
-    "startCommand": "concurrently -n GRAPH,NEXT --kill-others-on-fail -c green,blue \"npx @langchain/langgraph-cli dev --no-browser\" \"concurrently --delay 2000 \\\"pnpm dev\\\"\""
+    "startCommand": "concurrently -n GRAPH,NEXT --kill-others-on-fail -c green,blue \"npx @langchain/langgraph-cli dev --no-browser\" \"concurrently --delay 2000 \\\"pnpm dev\\\"\"",
+    "env": {
+      "NEXT_PUBLIC_API_URL" : "https://agentforceorchestrator-jltw--2024--4d9fd228.local-credentialless.webcontainer.io",
+      "NEXT_PUBLIC_ASSISTANT_ID" : "Agent"
+    }
   },
   "private": true,
   "version": "0.0.0",
