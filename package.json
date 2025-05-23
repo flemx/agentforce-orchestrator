@@ -7,7 +7,7 @@
     "url": "git+https://github.com/flemx/agentforce-orchestrator.git"
   },
   "stackblitz" : {
-    "startCommand": "concurrently \"pnpm dev\" \"npx @langchain/langgraph-cli dev\""
+    "startCommand": "concurrently \"npx @langchain/langgraph-cli dev --no-browser\" \"pnpm dev\""
   },
   "private": true,
   "version": "0.0.0",
