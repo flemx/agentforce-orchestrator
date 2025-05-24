@@ -21,10 +21,11 @@ import { LangGraphLogoSVG } from "@/components/icons/langgraph";
 import { Label } from "@/components/ui/label";
 import { ArrowRight } from "lucide-react";
 import { PasswordInput } from "@/components/ui/password-input";
-import { getApiKey } from "@/lib/api-key";
+import { getApiKey, getOpenaiKey } from "@/lib/api-key";
 import { useThreads } from "./Thread";
 import { toast } from "sonner";
-import SetApiKey from "@/components/SetApiKey";
+import { Client } from "@langchain/langgraph-sdk";
+
 
 export type StateType = { messages: Message[]; ui?: UIMessage[] };
 
@@ -66,6 +67,7 @@ async function checkGraphStatus(
     return false;
   }
 }
+
 
 const StreamSession = ({
   children,
@@ -127,7 +129,7 @@ const StreamSession = ({
 };
 
 // Default values for the form
-const DEFAULT_API_URL = "http://localhost:2024";
+const DEFAULT_API_URL = "https://agentforceorchestrator-jltw--2024--55edb8f4.local-credentialless.webcontainer.io";
 const DEFAULT_ASSISTANT_ID = "agent";
 
 export const StreamProvider: React.FC<{ children: ReactNode }> = ({
@@ -157,6 +159,16 @@ export const StreamProvider: React.FC<{ children: ReactNode }> = ({
     _setApiKey(key);
   };
 
+  const [openaiKey, _setOpenaiKey] = useState(() => {
+    const storedKey = getOpenaiKey();
+    return storedKey || "";
+  });
+
+  const setOpenaiKey = (key: string) => {
+    window.localStorage.setItem("lg:chat:openaiKey", openaiKey);
+    _setOpenaiKey(key);
+  };
+
   // Determine final values to use, prioritizing URL params then env vars
   const finalApiUrl = apiUrl || envApiUrl;
   const finalAssistantId = assistantId || envAssistantId;
@@ -182,12 +194,24 @@ export const StreamProvider: React.FC<{ children: ReactNode }> = ({
             onSubmit={(e) => {
               e.preventDefault();
 
+             
+  
               const form = e.target as HTMLFormElement;
               const formData = new FormData(form);
               const apiUrl = formData.get("apiUrl") as string;
               const assistantId = formData.get("assistantId") as string;
               const apiKey = formData.get("apiKey") as string;
+              const openaiKey = formData.get("openaiKey") as string;
 
+              const client = new Client({apiUrl});
+              client.assistants.update(
+                assistantId,
+                {
+                  graphId: assistantId,
+                  config: { "configurable": { "openai_key": openaiKey }}
+                });
+              
+              setOpenaiKey(openaiKey);
               setApiUrl(apiUrl);
               setApiKey(apiKey);
               setAssistantId(assistantId);
@@ -196,7 +220,20 @@ export const StreamProvider: React.FC<{ children: ReactNode }> = ({
             }}
             className="bg-muted/50 flex flex-col gap-6 p-6"
           >
-            <SetApiKey assistantId="agent" />
+             <div className="flex flex-col gap-2">
+              <Label htmlFor="apiKey">OpenAI API Key<span className="text-rose-500">*</span></Label>
+              <p className="text-muted-foreground text-sm">
+    
+              </p>
+              <PasswordInput
+                id="openaiKey"
+                name="apiKey"
+                defaultValue={openaiKey ?? ""}
+                className="bg-background"
+                placeholder="lsv2_pt_..."
+                required
+              />
+            </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="apiUrl">
                 Deployment URL<span className="text-rose-500">*</span>

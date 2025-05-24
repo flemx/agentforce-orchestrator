@@ -8,3 +8,14 @@ export function getApiKey(): string | null {
 
   return null;
 }
+
+export function getOpenaiKey(): string | null {
+  try {
+    if (typeof window === "undefined") return null;
+    return window.localStorage.getItem("lg:chat:openaiKey") ?? null;
+  } catch {
+    // no-op
+  }
+
+  return null;
+}
