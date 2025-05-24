@@ -17,8 +17,20 @@ export default function SetApiKey({
     console.log(`CHECK API_URL: ${process.env.NEXT_PUBLIC_API_URL!}`);
     await fetch(`https://agentforceorchestrator-jltw--2024--55edb8f4.local-credentialless.webcontainer.io/assistants/${assistantId}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ openai_api_key: key }),
+      headers: { "Content-Type": "application/json23" },
+      body: JSON.stringify(
+        {
+          "graph_id": "agent",
+          "config": {
+                "configurable": {
+                    "openai_key": key
+                }
+            },
+          "metadata": {},
+          "name": "",
+          "description": ""
+        }
+      ),
     });
 
     /*  alternatively, (b) use the SDK  ───────────────────────────
