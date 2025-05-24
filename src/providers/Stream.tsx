@@ -227,7 +227,7 @@ export const StreamProvider: React.FC<{ children: ReactNode }> = ({
               </p>
               <PasswordInput
                 id="openaiKey"
-                name="apiKey"
+                name="openaiKey"
                 defaultValue={openaiKey ?? ""}
                 className="bg-background"
                 placeholder="lsv2_pt_..."
