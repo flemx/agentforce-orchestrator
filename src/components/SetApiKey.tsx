@@ -15,7 +15,7 @@ export default function SetApiKey({
     if (!key) return;
     // (a) call the dev server directly  ───────────────────────────
     console.log(`CHECK API_URL: ${process.env.NEXT_PUBLIC_API_URL!}`);
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/assistants/${assistantId}`, {
+    await fetch(`https://agentforceorchestrator-jltw--2024--55edb8f4.local-credentialless.webcontainer.io/assistants/${assistantId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ openai_api_key: key }),
